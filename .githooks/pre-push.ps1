@@ -9,10 +9,7 @@
 $actGitBranch = git rev-parse --abbrev-ref HEAD
 $filesToBePushed = git diff --stat --cached "origin/$actGitBranch"
 
-$filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") } `
-				 | Select-Object -First 1 `
-				 | ForEach-Object {
-
+if ($filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") } ){
 	# Call build script and check result code
 	& "$PScriptRoot/../build.ps1" -target test
 	Write-Host "####################################" -ForegroundColor Magenta
