@@ -40,10 +40,7 @@ $status = git status -s
 # Git status returns files to be commited with a 'M' right at the start of the line, files
 # that have change BUT are not staged for commit are marked as ' M', notice the space at the
 # start of the line.
-$status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match "^M.*.csproj") } `
-		| Select-Object -first 1 `
-		| ForEach-Object {
-
+if ($status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj") }){
 	& "$PScriptRoot/../build.ps1" -target compile
 	Write-Host "####################################" -ForegroundColor Magenta
 	Write-Host ("make file returned: {0}" -f $LASTEXITCODE)
@@ -62,13 +59,11 @@ The same pattern is used during the GIT push process.
 ```pre-push.ps1```:
 
 ```PowerShell
+
 $actGitBranch = git rev-parse --abbrev-ref HEAD
 $filesToBePushed = git diff --stat --cached "origin/$actGitBranch"
 
-$filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") } `
-				 | Select-Object -First 1 `
-				 | ForEach-Object {
-
+if ($filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") } ){
 	# Call build script and check result code
 	& "$PScriptRoot/../build.ps1" -target test
 	Write-Host "####################################" -ForegroundColor Magenta
@@ -88,6 +83,7 @@ $filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj"
 		throw "Unit tests are broken, won't push changes to remote repository"
 	}
 }
+
 ```
 
 To retrieve the files to be pushed to the remote repository we use GIT `diff` via `git diff --stat --cached "origin/$actGitBranch"`. As done in `pre-commit.ps1` we scan the list of files for change cs or csproj files. If check is `true` we call our buildscript with the `test` target. In case of one or more unit tests fail `$LASTEXITCODE` will be not eqaul to zero. To present the user which tests failed we retrieve the content of the testresult files (*.trx).
