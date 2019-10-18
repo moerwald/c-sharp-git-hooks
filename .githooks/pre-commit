@@ -1,2 +1,2 @@
 #!/bin/sh
-c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\pre-commit.ps1'
+c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\.githooks\pre-commit.ps1'

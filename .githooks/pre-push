@@ -1,2 +1,3 @@
 #!/bin/sh
-c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\pre-push.ps1'
+c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\.githooks\pre-push.ps1'
+
