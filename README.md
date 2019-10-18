@@ -92,3 +92,12 @@ To retrieve the files to be pushed to the remote repository we use GIT `diff` vi
 
 To stop the push process the script will throw an exception.
 
+To sum things up here is the output of the hook scripts.
+
+Commit, everything is ok:
+
+![commit gif](docu/gifs/git-commit-hook.gif)
+
+Push, everything is ok:
+
+![push gif](docu/gifs/git-push-hook.gif)
