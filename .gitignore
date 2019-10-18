@@ -2,3 +2,7 @@
 *.trx
 *~
 *.swp
+
+
+bin
+obj
