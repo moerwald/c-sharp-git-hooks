@@ -1,4 +1,3 @@
-Write-HOST "KKKKKKKKK" -ForegroundColor Yellow
 $status = git status -s
 
 # Git status returns files to be commited with a 'M' right at the start of the line, files
