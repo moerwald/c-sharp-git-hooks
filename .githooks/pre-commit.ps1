@@ -3,7 +3,9 @@ $status = git status -s
 # Git status returns files to be commited with a 'M' right at the start of the line, files
 # that have change BUT are not staged for commit are marked as ' M', notice the space at the
 # start of the line.
-$status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj") } | ForEach-Object {
+$status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj") } `
+		| Select-Object -first 1 `
+		| ForEach-Object {
 
 	& "$PScriptRoot/../build.ps1" -target compile
 	Write-Host "####################################" -ForegroundColor Magenta
