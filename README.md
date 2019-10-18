@@ -101,3 +101,7 @@ Commit, everything is ok:
 Push, everything is ok:
 
 ![push gif](docu/gifs/git-push-hook.gif)
+
+Push, unit test(s) fail:
+
+![push fail gif](docu/gifs/git-push-hook-failure.gif)
