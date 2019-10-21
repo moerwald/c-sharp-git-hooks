@@ -32,9 +32,9 @@ and you're also able to run the unit tests via:
 > .\build.ps1 -target test
 ```
 
-## Create GIT hook and hook their directory into GIT
+## Create GIT hooks and add their directory into your local GIT repository
 
-Hooks used in this repository are located under ```.githooks```. The directory contains four files, where the ```pre-commit``` and ```pre-push``` are used fire up a PowerShell process executing the corresponding ps1 files. Since ```pre-commit``` and ```pre-push``` are Bash scripts they can be extended to work under Linux too (you'll only need to install PowerShell core). Because GIT doesn't offer a post-clone hook we've the tell GIT to use our custom pre-commit and pre-push after the initial clone of this repository. This can be done by simply calling ```initGitHooks.ps1```. After calling this script GIT will call:
+Hooks used in this repository are located under ```.githooks```. The directory contains four files, where the ```pre-commit``` and ```pre-push``` Bash script are used fire up a PowerShell process executing the corresponding ps1 files (because GIT under Windows uses an own port of Bash). Since ```pre-commit``` and ```pre-push``` are Bash scripts they can be extended to work under Linux too (you'll only need to install PowerShell core). Because GIT doesn't offer a post-clone hook we've the tell GIT to use our custom pre-commit and pre-push after the initial clone of this repository. This can be done by simply calling ```initGitHooks.ps1```. After that GIT invokes below scripts:
 
 * ```pre-commit.ps1``` every time you perform a commit to the local GIT repository.
 * ```pre-push.ps1``` every time you try to push the changes of your local GIT repo to the remote one.
