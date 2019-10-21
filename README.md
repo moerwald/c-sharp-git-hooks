@@ -1,4 +1,4 @@
-# c-sharp-git-hooks
+# Compile and unit test via GIT hooks
 
 This repository shows the usage of GIT hooks to compile and run unit tests automatically before your code gets committed and/or pushed. For demonstration we're using a simple C# net core project (under Windows). Using GIT hooks for this purpose gives you the following advantages:
 
