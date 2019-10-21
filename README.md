@@ -9,9 +9,8 @@ This repository shows the usage of GIT hooks to compile and run unit tests autom
 Disadvantages:
 
 1. Committing and pushing slows down
-2. Depending on your language of choice the code might still be broken after pushing it to GIT. This will be the case if you've forgotten to add a source file to the index.
 
-We all know the problem where we've to perform bug-fixes shortly before a deadline ends. You do some minor changes in the code, sync them up to the remote repository and tell your colleague/boss that the code can be shipped. You leave the office, and receive an email some minutes or hours later, complaining that the code doesn't even compile. And even worse, your commit was the one that broke the code. Wouldn't it be great if your version control system (in our case GIT) compiles the code before committing it, and even better run the unit tests before pushing your changes to remote repository (and of course declining the push)?
+We all know the problem where we've to perform bug-fixes shortly before a deadline ends. You do some minor changes in the code, sync them up to the remote repository and tell your colleague/boss that the code can be shipped. You leave the office, and receive an email some minutes or hours later, complaining that the code doesn't even compile. And even worse, your commit was the one that broke the code. Wouldn't it be great if your version control system (in our case GIT) compiles the code before committing it, and even better run the unit tests before pushing your changes to remote repository (and of course declining the push in case of a failed unit test)?
 
 To achieve this two things have to be realized:
 
