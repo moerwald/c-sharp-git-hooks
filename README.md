@@ -19,7 +19,7 @@ To achieve this two things have to be realized:
 
 ## Make your solution compilable via cmd-line
 
-In this repository I'm using [Nuke](https://nuke.build) to define build the steps to build a .net core HelloWorld console app and a dummy Helloworld unit test project. [Nuke](https://nuke.build) defines the several build steps in C#, the corresponding project is located in the build directory. The build project, build.ps1 and build.sh were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. build.ps1 acts more or less as proxy to the cmd-line app, that is the output of ```_build.csproj```. Each target defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that you're able to build your software via:
+In this repository I'm using [Nuke](https://nuke.build) to define build the steps to build a .net core HelloWorld console app and a dummy Helloworld unit test project. [Nuke](https://nuke.build) defines the several build steps in C#, the corresponding project is located in the build directory. The build project, build.ps1 and build.sh were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. build.ps1 acts more or less as proxy to the cmd-line app, that is the output of ```_build.csproj```. Each target defined in [Build.cs](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that you're able to build your software via:
 
 ```
 > .\build.ps1 -target compile
