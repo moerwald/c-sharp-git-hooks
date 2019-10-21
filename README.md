@@ -43,6 +43,7 @@ Let's take a look a the hook scripts in detail.
 ```pre-commit.ps1```:
 
 ```PowerShell
+
 $status = git status -s
 
 # Git status returns files to be committed with a 'M' right at the start of the line, files
@@ -57,6 +58,7 @@ if ($status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj")
 		throw "It seems you code doesn't compile ... Fix compilation error(s) before commiting"
 	}
 }
+
 ```
 
 First we retrieve the changed files via ```git status```. Files to be committed will be marked with a leading "M" at the start of each line. Via the ```Where-Object``` cmdlet we scan every line of ```git status``` if either a cs or csproj are marked for the commit. If so, we call the ```build.ps1```-script (generated via Nuke) with the ```compile``` target. The target is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs). After the build script has finished it's exit code is checked via `$LASTEXITCODE`. If it is unequal to zero an exception is fired, causing the commit process to be aborted. Based on these actions we ensure that the solution is compiled every time when a cs- or a csproj-file is requested to be committed to the local GIT repository.
