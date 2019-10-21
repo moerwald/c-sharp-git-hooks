@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if test -f "c:/Program Files/PowerShell/6/pwsh.exe"; then
+    c:/Program\ Files/PowerShell/6/pwsh.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\.githooks\pre-push.ps1'
+elif test -f "c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"; then
+    c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\.githooks\pre-push.ps1'
+fi
