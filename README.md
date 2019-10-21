@@ -4,7 +4,7 @@ This repository shows the usage of GIT hooks to compile and run unit tests autom
 
 1. All code that is committed to GIT compiles.
 2. All code that is pushed to the remote repository passes all unit tests.
-3. Faster feedback than via CI, that might build the code in a time triggered manner.
+3. Faster feedback than via CI, that might build the code in a time-triggered manner.
 
 Disadvantages:
 
@@ -46,7 +46,7 @@ Let's take a look a the hook scripts in detail.
 ```PowerShell
 $status = git status -s
 
-# Git status returns files to be commited with a 'M' right at the start of the line, files
+# Git status returns files to be committed with a 'M' right at the start of the line, files
 # that have change BUT are not staged for commit are marked as ' M', notice the space at the
 # start of the line.
 if ($status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj") }){
