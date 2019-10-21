@@ -1,6 +1,15 @@
 # c-sharp-git-hooks
 
-This repo shall show the usage of GIT hooks for C# net core projects (under Windows). The main idea was to keep code quality at a high or at least at the same level as it is.
+This repo shall show the usage of GIT hooks to compile and run unit tests automatically before your code gets commited and/or pushed. For demonstration we're using a simple C# net core project (under Windows). Using GIT hooks for this purpose gives you the following advantages:
+
+1. All code that is commited to GIT compiles.
+2. All code that is pushed to the remote repo passes all unit tests.
+3. Faster feedback than via CI, that might build the code in a time triggered manner.
+
+Disadvantages:
+
+1. Committing and pushing slows down
+2. Depending on your language of choice the code might still be broken after pushing it to GIT. This will be the case if you've forgotten to add a source file to the index.
 
 We all know the problem where we've to perform bugfixes shortly before a deadline ends. You do some minor changes in the code, sync them up to the remote repository and tell your colleague/boss that the code can be shipped. You leave the office, and receive an email some minutes or hours later, complaining that the code doesn't even compile. And even worse, your commit was the one that broke the code. Wouldn't it be great if your version control system (in our case GIT) compiles your before commiting it, and even better run the unit tests before pushing your changes to remote repo (and of course declining the push)?
 
