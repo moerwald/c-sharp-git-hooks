@@ -60,7 +60,7 @@ if ($status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj")
 }
 ```
 
-First we retrieve the changed files via ```git status```. Files to be committed will be marked with a leading "M" at the start of each line. Via the ```Where-Object``` cmdlet we scan every line of ```git status``` if either a cs or csproj are marked for the commit. If so, we call the ```build.ps1```-script (generate via Nuke) with the ```compile``` target. The target is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs). After the build script has finished it's exit code is checked via `$LASTEXITCODE`. If it is not equal to zero an exception is fired, causing the commit process to be aborted. Based on these actions we ensure that the solution is compiled every time when a cs or a csproj file is requested to be committed to the local GIT repository.
+First we retrieve the changed files via ```git status```. Files to be committed will be marked with a leading "M" at the start of each line. Via the ```Where-Object``` cmdlet we scan every line of ```git status``` if either a cs or csproj are marked for the commit. If so, we call the ```build.ps1```-script (generated via Nuke) with the ```compile``` target. The target is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs). After the build script has finished it's exit code is checked via `$LASTEXITCODE`. If it is unequal to zero an exception is fired, causing the commit process to be aborted. Based on these actions we ensure that the solution is compiled every time when a cs- or a csproj-file is requested to be committed to the local GIT repository.
 
 The same pattern is used during the GIT push process.
 
@@ -95,11 +95,10 @@ if ($filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csp
 
 ```
 
-To retrieve the files to be pushed to the remote repository we use GIT `diff` via `git diff --stat --cached "origin/$actGitBranch"`. As done in `pre-commit.ps1`, we scan the list of files for changed cs- or csproj-files. If the check is `true` we call our buildscript with the `test`-target. In case of one or more unit test(s) fail(s) `$LASTEXITCODE` is unequal to zero. To present the user which tests failed we retrieve the content of the testresult files (*.trx).
+To retrieve the files that will be pushed to the remote repository we use GIT `diff` via `git diff --stat --cached "origin/$actGitBranch"`. As done in `pre-commit.ps1`, we scan the list of files for changed cs- or csproj-files. If the check is `true` we call our buildscript with the `test`-target. In case of unit tests fail `$LASTEXITCODE` is unequal to zero, which causes an exception to be thrown. To present the user which tests failed we retrieve the content of the testresult files (*.trx).
 
-... Note: Creation of the trx files has to be done via MSBUILD, check the `VSTestLogger` XML entry in HelloWorld.Tests.csproj.
+... Note: Creation of the trx files has to be done via MSBUILD, check the `VSTestLogger` XML entry in [HelloWorld.Tests.csproj](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/84cbab0c960e04825ba4a8cd7507e66aa47d558e/src/project-cmd-line-app/HelloWorld/HelloWorld.Tests/HelloWorld.Tests.csproj#L15).
 
-To stop the push process the script an exception is throwed.
 
 Here is the output of the hook scripts.
 
