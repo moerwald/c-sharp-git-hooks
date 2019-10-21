@@ -1,9 +1,9 @@
 # c-sharp-git-hooks
 
-This repo shall show the usage of GIT hooks to compile and run unit tests automatically before your code gets commited and/or pushed. For demonstration we're using a simple C# net core project (under Windows). Using GIT hooks for this purpose gives you the following advantages:
+This repository shows the usage of GIT hooks to compile and run unit tests automatically before your code gets committed and/or pushed. For demonstration we're using a simple C# net core project (under Windows). Using GIT hooks for this purpose gives you the following advantages:
 
-1. All code that is commited to GIT compiles.
-2. All code that is pushed to the remote repo passes all unit tests.
+1. All code that is committed to GIT compiles.
+2. All code that is pushed to the remote repository passes all unit tests.
 3. Faster feedback than via CI, that might build the code in a time triggered manner.
 
 Disadvantages:
@@ -11,16 +11,16 @@ Disadvantages:
 1. Committing and pushing slows down
 2. Depending on your language of choice the code might still be broken after pushing it to GIT. This will be the case if you've forgotten to add a source file to the index.
 
-We all know the problem where we've to perform bugfixes shortly before a deadline ends. You do some minor changes in the code, sync them up to the remote repository and tell your colleague/boss that the code can be shipped. You leave the office, and receive an email some minutes or hours later, complaining that the code doesn't even compile. And even worse, your commit was the one that broke the code. Wouldn't it be great if your version control system (in our case GIT) compiles your before commiting it, and even better run the unit tests before pushing your changes to remote repo (and of course declining the push)?
+We all know the problem where we've to perform bug-fixes shortly before a deadline ends. You do some minor changes in the code, sync them up to the remote repository and tell your colleague/boss that the code can be shipped. You leave the office, and receive an email some minutes or hours later, complaining that the code doesn't even compile. And even worse, your commit was the one that broke the code. Wouldn't it be great if your version control system (in our case GIT) compiles your before committing it, and even better run the unit tests before pushing your changes to remote repository (and of course declining the push)?
 
-To achive this two things have to be realized:
+To achieve this two things have to be realized:
 
 1. Your code has to be compilable via the cmd-line.
 2. You need to add to create appropriate GIT hooks and update the hook directory of your local GIT repository.
 
 ## Make your solution compilable via cmd-line
 
-In this repository I'm using [Nuke](https://nuke.build) to define build the steps to build a .net core HelloWorld console app and a dummy Helloworld unit test project. [Nuke](https://nuke.build) defines the several build steps in C#, the corresponding project is located in the build directory. The build project, build.ps1 and build.sh were generated via the [Nuke](https://nuke.build) wizzard, by calling ```nuke :setup``` on the command line. build.ps1 acts more or less as proxy to the cmd-line app, that is the output of ```_build.csproj```. Each target defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that you're able to build your software via:
+In this repository I'm using [Nuke](https://nuke.build) to define build the steps to build a .net core HelloWorld console app and a dummy Helloworld unit test project. [Nuke](https://nuke.build) defines the several build steps in C#, the corresponding project is located in the build directory. The build project, build.ps1 and build.sh were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. build.ps1 acts more or less as proxy to the cmd-line app, that is the output of ```_build.csproj```. Each target defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that you're able to build your software via:
 
 ```
 > .\build.ps1 -target compile
@@ -34,7 +34,7 @@ and you're also able to run the unit tests via:
 
 ## Create GIT hook and hook their directory into GIT
 
-Hooks used in this repo are located under ```.githooks```. The directory contains four files, where the ```pre-commit``` and ```pre-push``` are used fire up a PowerShell process executing the corresponding ps1 files. Since ```pre-commit``` and ```pre-push``` are Bash scripts they can be extended to work under Linux too (you'll only need to install PowerShell core). Because GIT doesn't offer a post-clone hook we've the tell GIT to use our custom pre-commit and pre-push after the initial clone of this repository. This can be done by simply calling ```initGitHooks.ps1```. After calling this script GIT will call:
+Hooks used in this repository are located under ```.githooks```. The directory contains four files, where the ```pre-commit``` and ```pre-push``` are used fire up a PowerShell process executing the corresponding ps1 files. Since ```pre-commit``` and ```pre-push``` are Bash scripts they can be extended to work under Linux too (you'll only need to install PowerShell core). Because GIT doesn't offer a post-clone hook we've the tell GIT to use our custom pre-commit and pre-push after the initial clone of this repository. This can be done by simply calling ```initGitHooks.ps1```. After calling this script GIT will call:
 
 * ```pre-commit.ps1``` every time you perform a commit to the local GIT repository.
 * ```pre-push.ps1``` every time you try to push the changes of your local GIT repo to the remote one.
@@ -60,7 +60,7 @@ if ($status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj")
 }
 ```
 
-First we retrieve the changed files via ```git status```. Files to be commited will be marked with a leading "M" at the start of each line. Via the ```Where-Object``` cmdlet we scan every line of ```git status``` if either a cs or csproj are marked for the commit. If so, we call Nukes ```build.ps1``` script with the ```compile```, which is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs). After the build script has finished we it's exit via `$LASTEXITCODE`. If it is not equal to zero we will fire an exception, causing the commit process to be aborted. Based on these actions we ensure that the solution is compiled every time when a cs or a csproj file is requested for a local GIT commit.
+First we retrieve the changed files via ```git status```. Files to be commuted will be marked with a leading "M" at the start of each line. Via the ```Where-Object``` cmdlet we scan every line of ```git status``` if either a cs or csproj are marked for the commit. If so, we call Nukes ```build.ps1``` script with the ```compile```, which is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs). After the build script has finished we it's exit via `$LASTEXITCODE`. If it is not equal to zero we will fire an exception, causing the commit process to be aborted. Based on these actions we ensure that the solution is compiled every time when a cs or a csproj file is requested for a local GIT commit.
 
 The same pattern is used during the GIT push process.
 
