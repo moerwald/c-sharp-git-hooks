@@ -9,3 +9,7 @@ ports:
 tasks:
 - init: echo 'init script' # runs during prebuild
   command: echo 'start script'
+  command: chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/.githooks/*
+  command: chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1
+  command: chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/build.ps1
+  command: pwsh -Command "& /workspace/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1"
