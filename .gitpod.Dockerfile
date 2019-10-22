@@ -12,6 +12,8 @@ RUN wget http://mirrors.edge.kernel.org/ubuntu/pool/main/i/icu/libicu60_60.2-3ub
 RUN echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/18.04/prod bionic main" >> /etc/apt/sources.list.d/microsoft-prod.list
 RUN  apt-get update \
      && apt install -y powershell
+     
+RUN apt-get update && apt-get -y -o APT::Install-Suggests="true" install dotnet-sdk-3.0
 
 #RUN wget -q https://github.com/PowerShell/PowerShell/releases/download/v6.2.3/powershell_6.2.3-1.ubuntu.18.04_amd64.deb \
 #    && dpkg -i powershell_6.2.3-1.ubuntu.18.04_amd64.deb \
