@@ -5,12 +5,21 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
     && apt-get update \
     && add-apt-repository universe 
     
-RUN apt install -y snapd \
-    && systemctl status snapd.service
+RUN apt-get install -y \
+        less \
+        locales \
+        ca-certificates \
+        libicu63 \
+        libssl1.1 \
+        libc6 \
+        libgcc1 \
+        libgssapi-krb5-2 \
+        liblttng-ust0 \
+        libstdc++6 \
+        zlib1g \
+        curl
 
-RUN snap install powershell --classic
-
-SHELL ["pwsh"]
+RUN apt-get install -y powershell 
 
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
