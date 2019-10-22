@@ -1,5 +1,4 @@
-FROM gitpod:workspace-dotnet:latest
-
+FROM gitpod/workspace-dotnet
 
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
