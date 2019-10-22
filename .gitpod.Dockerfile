@@ -5,7 +5,8 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
     && apt-get update \
     && add-apt-repository universe 
     
-RUN dpkg -i powershell_6.2.0-1.ubuntu.18.04_amd64.deb \
+RUN wget -q https://github.com/PowerShell/PowerShell/releases/download/v6.2.3/powershell_6.2.3-1.ubuntu.18.04_amd64.deb \
+    && dpkg -i powershell_6.2.0-1.ubuntu.18.04_amd64.deb \
     && apt-get install -f
 
 
