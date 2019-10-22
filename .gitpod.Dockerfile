@@ -15,9 +15,9 @@ RUN  apt-get update \
      
 RUN apt-get update && apt-get -y -o APT::Install-Suggests="true" install dotnet-sdk-3.0
 
-RUN RUN chmod +x ~/how-to-use-git-hooks-for-csharp-projects/.githooks/*
-RUN RUN chmod +x ~/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1
-RUN RUN chmod +x ~/how-to-use-git-hooks-for-csharp-projects/build.ps1
+RUN chmod +x ~/how-to-use-git-hooks-for-csharp-projects/.githooks/*
+RUN chmod +x ~/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1
+RUN chmod +x ~/how-to-use-git-hooks-for-csharp-projects/build.ps1
 
     
 
