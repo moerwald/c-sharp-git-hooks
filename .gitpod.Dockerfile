@@ -9,8 +9,8 @@ RUN apt-get install -y \
         less \
         locales \
         ca-certificates \
-        libicu63 \
-        libssl1.1 \
+        libicu60 \
+        libssl1.0 \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
