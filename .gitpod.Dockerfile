@@ -5,7 +5,9 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
     && apt-get update \
     && add-apt-repository universe 
     
-RUN apt-get install -y powershell
+RUN add-apt-repository "deb http://ftp.de.debian.org/debian stretch main" \
+    && apt-get update \
+    apt-get install -y powershell
 
 SHELL ["pwsh"]
 
