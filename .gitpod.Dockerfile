@@ -15,11 +15,6 @@ RUN  apt-get update \
      
 RUN apt-get update && apt-get -y -o APT::Install-Suggests="true" install dotnet-sdk-3.0
 
-RUN chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/.githooks/*
-RUN chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1
-RUN chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/build.ps1
-
-    
 
 #RUN wget -q https://github.com/PowerShell/PowerShell/releases/download/v6.2.3/powershell_6.2.3-1.ubuntu.18.04_amd64.deb \
 #    && dpkg -i powershell_6.2.3-1.ubuntu.18.04_amd64.deb \
