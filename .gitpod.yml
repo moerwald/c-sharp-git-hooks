@@ -8,5 +8,9 @@ ports:
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
 tasks:
 - init: echo 'init script' # runs during prebuild
-  command: echo 'start script'
+  command: echo 'start script' \
+           && chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/.githooks/* \
+           && chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1 \
+           && chmod +x /workspace/how-to-use-git-hooks-for-csharp-projects/build.ps1 \
+           && pwsh -Command "& /workspace/how-to-use-git-hooks-for-csharp-projects/initGitHooks.ps1"
   
