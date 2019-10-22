@@ -1,10 +1,5 @@
-FROM gitpod/workspace-full
+FROM gitpod:workspace-dotnet:latest
 
-USER root
-
-RUN apt-get update \
-    && apt-get install -y powershell \
-    && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
