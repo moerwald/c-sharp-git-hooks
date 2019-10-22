@@ -5,8 +5,9 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
     && apt-get update \
     && add-apt-repository universe 
     
-RUN apt install snapd \
-    && snap install powershell --classic
+RUN apt install -y snapd 
+
+RUN snap install powershell --classic
 
 SHELL ["pwsh"]
 
