@@ -15,6 +15,7 @@ RUN  apt-get update \
      
 RUN apt-get update && apt-get -y -o APT::Install-Suggests="true" install dotnet-sdk-3.0
 
+RUN pwd
 RUN chmod 755 ./initGitHooks.ps1
     
 
