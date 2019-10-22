@@ -5,7 +5,8 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
     && apt-get update \
     && add-apt-repository universe 
     
-RUN apt install -y snapd 
+RUN apt install -y snapd \
+    && systemctl status snapd.service
 
 RUN snap install powershell --classic
 
