@@ -5,21 +5,9 @@ RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsof
     && apt-get update \
     && add-apt-repository universe 
     
-RUN apt-get install -y \
-        less \
-        locales \
-        ca-certificates \
-        libicu60 \
-        libssl1.0 \
-        libc6 \
-        libgcc1 \
-        libgssapi-krb5-2 \
-        liblttng-ust0 \
-        libstdc++6 \
-        zlib1g \
-        curl
+RUN dpkg -i powershell_6.2.0-1.ubuntu.18.04_amd64.deb \
+    && apt-get install -f
 
-RUN apt-get install -y powershell 
 
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
