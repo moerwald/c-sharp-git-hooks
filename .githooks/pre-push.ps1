@@ -9,9 +9,16 @@
 $actGitBranch = git rev-parse --abbrev-ref HEAD
 $filesToBePushed = git diff --stat --cached "origin/$actGitBranch"
 
-if ($filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") } ){
+if ($filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") } ) {
 	# Call build script and check result code
-	& "$PScriptRoot/../build.ps1" -target test
+	git stash --include-untracked # Ensure that we only compile and run tests against files marked for commit
+	try {
+		& "$PScriptRoot/../build.ps1" -target test
+	}
+	finally {
+		git stash pop # restore "initial" state
+	}
+
 	Write-Host "####################################" -ForegroundColor Magenta
 	Write-Host ("make file returned: {0}" -f $LASTEXITCODE)
 	Write-Host "####################################" -ForegroundColor Magenta
