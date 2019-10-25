@@ -14,6 +14,7 @@ function Invoke-InStashedEnvironment {
         & $Callback
     }
     finally {
+        git clean -fdx
         git stash pop # restore "initial" state
     }
 }
