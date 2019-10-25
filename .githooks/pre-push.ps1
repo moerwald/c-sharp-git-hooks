@@ -12,7 +12,7 @@ function Main {
     #>
 
     $actGitBranch = git rev-parse --abbrev-ref HEAD
-    if (Test-RelevantFileChanged -changedFile (git diff --stat --cached "origin/$actGitBranch")) {
+    if (Test-RelevantFileChanged -changedFile @(git diff --stat --cached "origin/$actGitBranch")) {
         Invoke-InStashedEnvironment { 
 			Invoke-BuildScript -target test
         }
