@@ -11,7 +11,7 @@ function Invoke-InStashedEnvironment {
 
     git stash --include-untracked --keep-index # Ensure that we only compile against file marked for commit
     try {
-        $Callback.Invoke()
+        & $Callback
     }
     finally {
         git stash pop # restore "initial" state
