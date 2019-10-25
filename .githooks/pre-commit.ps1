@@ -5,7 +5,7 @@ function Main {
 	Invoke-InStashedEnvironment { 
 
 		if (Test-RelevantFileChanged -changedFile @(git status -s)) {
-			Invoke-BuildScript -target build
+			Invoke-BuildScript -target compile
 
 			Write-LastExitCode
 			if ($LASTEXITCODE -ne 0) {

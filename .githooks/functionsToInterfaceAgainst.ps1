@@ -2,7 +2,7 @@
 function Invoke-BuildScript{
     param(
         [Parameter(Mandatory, Position = 0)]
-        [ValidateSet("build", "test")]
+        [ValidateSet("compile", "test")]
         [string]
         $target
     )
