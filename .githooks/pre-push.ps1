@@ -1,24 +1,5 @@
 . $PSScriptRoot/helpers.ps1
-
-function Write-BrokenUnitTests {
-    Write-Host "`nFollowing tests failed: " -ForegroundColor Red
-    Get-ChildItem "$PSScriptRoot/../" -Include '*.trx' -Recurse | ForEach-Object {
-        $testResult = [xml](Get-Content $_)
-        $testResult.TestRun.Results.UnitTestResult | Where-Object { $_.outcome -eq "Failed" } | ForEach-Object {
-            Write-Host "`t - $($_.testname)" -ForegroundColor Red
-        }
-    }
-}
-
-function Test-RelevantFileChanged {
-    $actGitBranch = git rev-parse --abbrev-ref HEAD
-    $filesToBePushed = git diff --stat --cached "origin/$actGitBranch"
-    $filesToBePushed | Where-Object { ($_ -match ".*.cs") -or ($_ -match ".*.csproj") }
-}
-
-function Start-CompileAndUnitTests{
-    & "$PScriptRoot/../build.ps1" -target test 
-}
+. $PSScriptRoot/functionsToInterfaceAgainst.ps1
 
 function Main {
 
@@ -30,9 +11,10 @@ function Main {
     #      via an exception.
     #>
 
-    if (Test-RelevantFileChanged) {
+    $actGitBranch = git rev-parse --abbrev-ref HEAD
+    if (Test-RelevantFileChanged -changedFile (git diff --stat --cached "origin/$actGitBranch")) {
         Invoke-InStashedEnvironment { 
-            Start-CompileAndUnitTests
+			Invoke-BuildScript -target test
         }
         Write-LastExitCode
         if ($LASTEXITCODE -ne 0) {
