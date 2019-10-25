@@ -34,7 +34,7 @@ function Main {
         Invoke-InStashedEnvironment { 
             Start-CompileAndUnitTests
         }
-        Dump-LastExitCode
+        Write-LastExitCode
         if ($LASTEXITCODE -ne 0) {
             Write-BrokenUnitTests
             throw "Unit tests are broken, won't push changes to remote repository"
