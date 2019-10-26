@@ -1,7 +1,7 @@
 . $PSScriptRoot/helpers.ps1
 . $PSScriptRoot/functionsToInterfaceAgainst.ps1
 
-function Main {
+function Invoke-PreCommit {
 	Invoke-InStashedEnvironment { 
 
 		if (Test-RelevantFileChanged -changedFile @(git status -s)) {
@@ -15,4 +15,4 @@ function Main {
 	}
 }
 
-Main
+Invoke-PreCommit 
