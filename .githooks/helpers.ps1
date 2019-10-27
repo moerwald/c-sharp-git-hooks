@@ -12,6 +12,7 @@ function Invoke-InStashedEnvironment {
     $result = git stash --include-untracked --keep-index # Ensure that we only compile against file marked for commit
     $someThingStashed = $true
     if ($result -like "*No local changes to save*"){
+        # Nothing to stash found
         $someThingStashed = $false
     }
 
@@ -19,8 +20,9 @@ function Invoke-InStashedEnvironment {
         & $Callback
     }
     finally {
-        git clean -fdx
+        # Restore the original workspace state
         if ($someThingStashed){
+            git clean -fdx
             # Only pop if something was stashed before, otherwise $LASTEXITCODE will be !=  0, which will cause other steps to break
             git stash pop # restore "initial" state
         }
