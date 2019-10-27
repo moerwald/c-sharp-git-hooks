@@ -1,7 +1,7 @@
 . $PSScriptRoot/helpers.ps1
 . $PSScriptRoot/functionsToInterfaceAgainst.ps1
 
-function Main {
+function Invoke-PrePush {
 
     <#
     # Perform cached diff to check either cs or csproj files have change. If so we:
@@ -23,5 +23,3 @@ function Main {
         }
     }
 }
-
-Main
