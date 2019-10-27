@@ -1,11 +1,6 @@
 . $PSScriptRoot/testRepoHelpers.ps1
 
 Describe "Test several push scenarios" {
-    function AssertCompileTargetWasCalled {
-        $buildScriptResultFile = "$env:TEMP/invoke-buildscript.json"
-        (Get-Content $buildScriptResultFile | ConvertFrom-Json).Target | Should -Be "test"
-        $null = Remove-Item $buildScriptResultFile
-    }
 
     $repositoryInfo = @{ }
     $clonedRepositoryPath = "$env:TEMP\$([System.Guid]::NewGuid())"
@@ -39,6 +34,14 @@ Describe "Test several push scenarios" {
         ChangeAndCommit-AlreadyIndexedFile -file $repositoryInfo.TestFile1
 
         git push -u origin test_push
-        AssertCompileTargetWasCalled
+        Assert-TargetWasCalled  -target "test"
+    }
+
+    It "Remove tracked file, commit and push it" {
+        git rm $repositoryInfo.TestFile1
+        git commit -m "Removed file"
+
+        git push -u origin test_push
+        Assert-TargetWasCalled  -target "test"
     }
 }

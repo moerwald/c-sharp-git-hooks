@@ -81,3 +81,15 @@ function ChangeAndCommit-AlreadyIndexedFile {
     git add $file
     git commit -m "some change"
 }
+
+function Assert-TargetWasCalled {
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [ValidateSet("compile", "test")]
+        [string]
+        $target
+    )
+    $buildScriptResultFile = "$env:TEMP/invoke-buildscript.json"
+    (Get-Content $buildScriptResultFile | ConvertFrom-Json).Target | Should -Be $target
+    $null = Remove-Item $buildScriptResultFile
+}
