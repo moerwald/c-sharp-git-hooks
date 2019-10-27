@@ -73,7 +73,7 @@ function Invoke-PreCommit {
 ```
 
 The script sources a `helper.ps1`-file ,which contains functions used by `pre-commit.ps1` and `pre-push.ps1`,  and a `functionsToInterfaceAgainst.ps1`-file, which function that the use might customize for her own needs. Based on that the base flow is decoupled from the user's needs. `Invoke-InStashedEnvironment` stashed ALL files (regardless if indexed or not) to ensure that the compile operation is only called with commit diff. `Invoke-InStashedEnvironment` takes a `scriptblock`-object as parameter, which is invoked after the stash operation. After the `scriptblock`-object was invoked the old workspace state is restored.
-In the stashed environment ```git status``` is used to find the changed filenames, which are stored in the `$status` array. `Test-RelevantFileChanged` decides if one of the files has a `cs` or `csproj` suffix. If so the code has to be compiled before committing it. `Test-RelevantFileChanged` and `Invoke-BuildScript` are located in `functionsToInterfaceAgainst.ps1`. It is assumed that `Invoke-BuildScript` set the PowerShell automatic variable `$LASTEXITCODE` to a value unequal zero in case of failure. If so, the commit process is canceled by the `throw` statement. In the background `Invoke-BuildScript` calls the ```build.ps1```-script (generated via Nuke) with the ```compile``` target. The target is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs).
+In the stashed environment ```git status``` is used to find the changed filenames, which are stored in the `$status` array. `Test-RelevantFileChanged` decides if one of the files has a `cs` or `csproj` suffix. If so the code has to be compiled before committing it. `Test-RelevantFileChanged` and `Invoke-BuildScript` are located in `functionsToInterfaceAgainst.ps1`. It is assumed that `Invoke-BuildScript` set the PowerShell automatic variable `$LASTEXITCODE` to a value unequal zero in case of failure. If so, the commit process is canceled by the `throw` statement. In the background, `Invoke-BuildScript` calls the ```build.ps1```-script (generated via Nuke) with the ```compile``` target. The target is defined in [Build.cs](https://github.com/moerwald/c-sharp-git-hooks/blob/feature/repo-description/build/Build.cs).
 
 The same pattern is used during the GIT push process.
 
@@ -113,7 +113,7 @@ As done in `pre-commit.ps1`, we scan the list of files for changed `cs`- or `csp
 
 ... Note: Creation of the trx files has to be done via MSBUILD, check the `VSTestLogger` XML entry in [HelloWorld.Tests.csproj](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/84cbab0c960e04825ba4a8cd7507e66aa47d558e/src/project-cmd-line-app/HelloWorld/HelloWorld.Tests/HelloWorld.Tests.csproj#L15).
 
-Since testing the GIT hooks by hands can be quite annoying the `git-hooks` folder contains some [Pester](https://github.com/pester/Pester) tests verifying correct behavior.
+The `HelloWorld` playground projects are a good base to play around with the hooks, but testing the scripts by changing the several source is quite annoying. Therefore  `githooks-tests` folder contains some [Pester](https://github.com/pester/Pester) tests verifying correct behavior. The tests can be invoked on the cmd-line via `githooks-tests>Invoke-Pester`.
 
 Here is the output of the hook scripts.
 
