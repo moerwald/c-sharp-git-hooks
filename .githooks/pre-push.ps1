@@ -23,3 +23,5 @@ function Invoke-PrePush {
         }
     }
 }
+
+Invoke-PrePush
