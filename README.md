@@ -132,6 +132,6 @@ Push, unit test(s) fail:
 
 # GitPod "Playground"
 
-If you want to try the hooks live just click on this [GitPod link](https://gitpod.io/#https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects) and type `pwsh -Command "& .\build.ps1 -target test` in the terminal. To play around with the hooks, just change a `cs`-file and commit it. If you want to check the pre-push hook just enter `git push --dry-run`.
+If you want to try the hooks live just click on this [GitPod link](https://gitpod.io/#https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects). The GIT hooks are automatically registered during the workspace startup. To play arround with the scripts change a `cs` file, call `git add *.cs` and `git commit`. The hooks will automatically compile the code. Afterwards you can check the push hook via `git push --dry-run`.
 
 ![GitPod gif](docu/gifs/gitpod.gif)
