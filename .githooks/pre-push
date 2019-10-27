@@ -1,9 +1,9 @@
 #!/bin/sh
 
 if test -f "c:/Program Files/PowerShell/6/pwsh.exe"; then
-    c:/Program\ Files/PowerShell/6/pwsh.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\.githooks\pre-push.ps1'
+    c:/Program\ Files/PowerShell/6/pwsh.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '. .\.githooks\pre-push.ps1; Invoke-PrePush'
 elif test -f "c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"; then
-    c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '.\.githooks\pre-push.ps1'
+    c:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -NoProfile -ExecutionPolicy RemoteSigned -Command '. .\.githooks\pre-push.ps1; Invoke-PrePush'
 elif test -f "/usr/bin/pwsh"; then
-    pwsh -Command '& .\.githooks\pre-push.ps1'
+    pwsh -Command '. .\.githooks\pre-push.ps1; Invoke-PrePush'
 fi
