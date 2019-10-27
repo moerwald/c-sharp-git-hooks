@@ -1,10 +1,15 @@
 . $PSScriptRoot/helpers.ps1
 . $PSScriptRoot/functionsToInterfaceAgainst.ps1
 
-function Main {
+function Invoke-PreCommit {
 	Invoke-InStashedEnvironment { 
+		$status = git status -s
+		if (!$status -or $status.Count -eq 0){
+			Write-Warning "git status -s didn't return any changes!"
+			return
+		}
 
-		if (Test-RelevantFileChanged -changedFile @(git status -s)) {
+		if (Test-RelevantFileChanged -changedFile $status) {
 			Invoke-BuildScript -target compile
 
 			Write-LastExitCode
@@ -14,5 +19,3 @@ function Main {
 		}
 	}
 }
-
-Main

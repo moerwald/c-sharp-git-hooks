@@ -19,7 +19,7 @@ function Test-RelevantFileChanged {
 	# Git status returns files to be commited with a 'M' right at the start of the line, files
 	# that have change BUT are not staged for commit are marked as ' M', notice the space at the
 	# start of the line.
-	$changedFile | Where-Object { ($_ -match ".*\.cs") -or ($_ -match ".*\.csproj") }
+	$changedFile | Where-Object { ($_ -match ".*\.cs") -or ($_ -match ".*\.csproj") } | Select-Object -First 1
 }
 
 function Write-BrokenUnitTests {
