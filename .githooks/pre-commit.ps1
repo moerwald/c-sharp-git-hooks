@@ -1,15 +1,21 @@
-$status = git status -s
+. $PSScriptRoot/helpers.ps1
+. $PSScriptRoot/functionsToInterfaceAgainst.ps1
 
-# Git status returns files to be commited with a 'M' right at the start of the line, files
-# that have change BUT are not staged for commit are marked as ' M', notice the space at the
-# start of the line.
-if ($status | Where-Object { ($_ -match "^M.*\.cs$") -or ($_ -match ".*.csproj") }){
-	& "$PScriptRoot/../build.ps1" -target compile
-	Write-Host "####################################" -ForegroundColor Magenta
-	Write-Host ("make file returned: {0}" -f $LASTEXITCODE)
-	Write-Host "####################################" -ForegroundColor Magenta
-	if ($LASTEXITCODE -ne 0) {
-		throw "It seems you code doesn't compile ... Fix compilation error(s) before commiting"
+function Invoke-PreCommit {
+	Invoke-InStashedEnvironment { 
+		$status = git status -s
+		if (!$status -or $status.Count -eq 0){
+			Write-Warning "git status -s didn't return any changes!"
+			return
+		}
+
+		if (Test-RelevantFileChanged -changedFile $status) {
+			Invoke-BuildScript -target compile
+
+			Write-LastExitCode
+			if ($LASTEXITCODE -ne 0) {
+				throw "It seems you code doesn't compile ... Fix compilation error(s) before commiting"
+			}
+		}
 	}
 }
-
