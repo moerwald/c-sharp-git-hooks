@@ -20,10 +20,12 @@ Describe "Tests to verfiy stashing operations of git hooks" {
 
         ChangeAndCommit-AlreadyIndexedFile -file $repositoryInfo.TestFile1
 
-        # Check if 
         $changedFiles = (Get-ChangedFiles).ChangedFile 
         $changedFiles | Should -Not -BeNullOrEmpty
+        # Check if none added file was stashed
         $changedFiles | ForEach-Object { $_ | Should -Not -BeLike "*$someUntrackedFile*" }
+
+        # Checkf if none added file was restored 
         Test-Path $someUntrackedFile | Should -BeTrue
     }
 
@@ -33,12 +35,16 @@ Describe "Tests to verfiy stashing operations of git hooks" {
 
         ChangeAndCommit-AlreadyIndexedFile -file $repositoryInfo.TestFile1
 
-        "change" >> $repositoryInfo.TestFile1
         $defaultSourceFile2 = $repositoryInfo.TestFile2
-        # Check if 
+        "change" >> $defaultSourceFile2
+
         $changedFiles = (Get-ChangedFiles).ChangedFile 
         $changedFiles | Should -Not -BeNullOrEmpty
+
+        # Check if none added file was stashed
         $changedFiles | ForEach-Object { $_ | Should -Not -BeLike "*$defaultSourceFile2*" }
+
+        # Checkf if none added file was restored 
         Test-Path $defaultSourceFile2 | Should -BeTrue
     }
 }
