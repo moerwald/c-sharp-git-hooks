@@ -2,8 +2,8 @@
 
 This repository shows the usage of GIT hooks to compile and run unit tests automatically before your code gets committed and/or pushed. For demonstration, we're using a simple C# net core project. Using GIT hooks for this purpose gives you the following advantages:
 
-1. All code that is committed to GIT compiles.
-2. All code that is pushed to the remote repository passes all unit tests.
+- All code that is committed to GIT compiles.
+- All code that is pushed to the remote repository passes all unit tests.
 
 Disadvantages:
 
