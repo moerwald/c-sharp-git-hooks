@@ -15,7 +15,7 @@ The idea for this scripts was based on the following issues:
 - Developers don't check the CI outcome (which is very sad, but not uncommon at daily work ...)
 - Increase feedback time. You'll get "instant" feedback on commit/push if your code is ok or if you messed up something.
 
-To implement above-mentioned GIT behavior the following points need to be realized:
+To implement above-mentioned GIT behavior following needs to be realized:
 
 1. Your code has to be compilable via the cmd-line.
 2. You need to create GIT hook scripts and update the hook directory of your local GIT repository (or tell GIT to point to a directory containing your hooks -> see [initGitHooks.ps1](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/initGitHooks.ps1) ).
