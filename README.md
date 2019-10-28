@@ -4,7 +4,6 @@ This repository shows the usage of GIT hooks to compile and run unit tests autom
 
 1. All code that is committed to GIT compiles.
 2. All code that is pushed to the remote repository passes all unit tests.
-3. Faster feedback than via CI, that might build the code in a time-triggered manner.
 
 Disadvantages:
 
@@ -12,24 +11,24 @@ Disadvantages:
 
 The idea for this scripts was based on the following issues:
 
-- CI (e.g. Jenkins) doesn't check all temporary branches, e.g. short-living feature or bugfix branches that are going to be merged to the production branch.
+- CI (e.g. Jenkins) doesn't check all temporary branches, e.g. short-living feature- or bugfix-branches that are going to be merged to the production branch.
 - Developers don't check the CI outcome (which is very sad, but not uncommon at daily work ...)
-- Increase feedback time. You'll "immediately" get feedback on commit/push if your code is ok, or if you messed something.
+- Increase feedback time. You'll get "instant" feedback on commit/push if your code is ok or if you messed up something.
 
-As the base for above-mentioned GIT behavior the following points need to be realized:
+To implement above-mentioned GIT behavior the following points need to be realized:
 
 1. Your code has to be compilable via the cmd-line.
-2. You need to add to create GIT hook scripts and update the hook directory of your local GIT repository (or tell GIT to point to a directory containing your hooks).
+2. You need to create GIT hook scripts and update the hook directory of your local GIT repository (or tell GIT to point to a directory containing your hooks -> see [initGitHooks.ps1](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/initGitHooks.ps1) ).
 
 ## Make your solution compilable via cmd-line
 
-In this repository [Nuke](https://nuke.build) is used to define build the steps to build a .net core "HelloWorld" console app and a dummy "Helloworld" unit test project. [Nuke](https://nuke.build) defines several build steps in C#, the corresponding project is located in the build directory. The build project, `build.ps1` and `build.sh` were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. `build.ps1` acts more or less as a proxy to the cmd-line app, which is the output of ```_build.csproj```. Each target defined in [Build.cs](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that you're able to build your software via:
+In this repository [Nuke](https://nuke.build) is used to define the steps to build a .net core "HelloWorld" console app and a dummy "Helloworld" unit test project. The corresponding build project is located in the [build](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/tree/master/build) directory. The build project, `build.ps1` and `build.sh` were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. `build.ps1` acts as a proxy to the cmd-line app, which is the output of [_build.csproj](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/_build.csproj). Each target defined in [Build.cs](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that the code can be compiled via:
 
 ```
 > .\build.ps1 -target compile
 ```
 
-and you're also able to run the unit tests via:
+Unit-tests can be run via:
 
 ```
 > .\build.ps1 -target test
