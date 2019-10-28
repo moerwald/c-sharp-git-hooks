@@ -121,7 +121,11 @@ As done in `pre-commit.ps1`, we scan the list of files for changed `cs`- or `csp
 
 ... Note: Creation of the trx files has to be done via MSBUILD, check the `VSTestLogger` XML entry in [HelloWorld.Tests.csproj](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/84cbab0c960e04825ba4a8cd7507e66aa47d558e/src/project-cmd-line-app/HelloWorld/HelloWorld.Tests/HelloWorld.Tests.csproj#L15).
 
+# PESTER tests
+
 The `HelloWorld` playground projects are a good base to play around with the hooks, but testing the scripts by changing the several sources is quite annoying. Therefore  [githooks-tests](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/tree/master/githooks-tests) folder contains some [Pester](https://github.com/pester/Pester) tests verifying correct behavior. The tests can be invoked on the cmd-line via `githooks-tests> Invoke-Pester`.
+
+# Demo
 
 Below are some GIFs representing the outcome of the hook scripts:
 
