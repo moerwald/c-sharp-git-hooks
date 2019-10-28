@@ -22,7 +22,9 @@ To implement above-mentioned GIT behavior following needs to be realized:
 
 ## Make your solution compilable via cmd-line
 
-In this repository [Nuke](https://nuke.build) is used to define the steps to build a .net core "HelloWorld" console app and a dummy "Helloworld" unit test project. The corresponding build project is located in the [build](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/tree/master/build) directory. The build project, `build.ps1` and `build.sh` were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. `build.ps1` acts as a proxy to the cmd-line app, which is the output of [_build.csproj](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/_build.csproj). Each target defined in [Build.cs](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. Based on that the code can be compiled via:
+In this repository [Nuke](https://nuke.build) is used to define the steps to build a .net core "HelloWorld" console app and a dummy "Helloworld" unit test project. The corresponding build project is located in the [build](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/tree/master/build) directory. The build project, `build.ps1` and `build.sh` were generated via the [Nuke](https://nuke.build) wizard, by calling ```nuke :setup``` on the command line. `build.ps1` acts as a proxy to the cmd-line app, which is the output of [_build.csproj](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/_build.csproj). Each target defined in [Build.cs](https://github.com/moerwald/how-to-use-git-hooks-for-csharp-projects/blob/master/build/Build.cs) is proxied by the ```-target``` parameter of ```build.ps1```. 
+
+Based on that code can be compiled via:
 
 ```
 > .\build.ps1 -target compile
